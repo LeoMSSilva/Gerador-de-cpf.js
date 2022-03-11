@@ -4,7 +4,7 @@
   "description": "É um gerador de cpfs aleatórios válidos.",
   "main": "main.js",
   "scripts": {
-    "webpack": "webpack -w"
+    "start": "webpack -w"
   },
   "keywords": [],
   "author": "LeoMSSilva",
