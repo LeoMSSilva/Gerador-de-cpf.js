@@ -2,17 +2,17 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/modules/GeraCpf.js":
-/*!********************************!*\
-  !*** ./src/modules/GeraCpf.js ***!
-  \********************************/
+/***/ "./src/modules/generateCpf.js":
+/*!************************************!*\
+  !*** ./src/modules/generateCpf.js ***!
+  \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ GeraCpf)
+/* harmony export */   "default": () => (/* binding */ GenerateCpf)
 /* harmony export */ });
-/* harmony import */ var _ValidaCpf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ValidaCpf */ "./src/modules/ValidaCpf.js");
+/* harmony import */ var _validateCpf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validateCpf */ "./src/modules/validateCpf.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -21,52 +21,50 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var GeraCpf = /*#__PURE__*/function () {
-  function GeraCpf() {
-    _classCallCheck(this, GeraCpf);
+var GenerateCpf = /*#__PURE__*/function () {
+  function GenerateCpf() {
+    _classCallCheck(this, GenerateCpf);
   }
 
-  _createClass(GeraCpf, [{
-    key: "rand",
-    value: function rand() {
+  _createClass(GenerateCpf, [{
+    key: "random",
+    value: function random() {
       var min = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 100000000;
       var max = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 999999999;
-      return String(Math.floor(Math.random() * (max - min) + min));
+      return Math.floor(Math.random() * (max - min) + min);
     }
   }, {
-    key: "formataCpf",
-    value: function formataCpf(cpf) {
-      cpf += '00000000000';
-      return cpf.slice(0, 3) + '.' + cpf.slice(3, 6) + '.' + cpf.slice(6, 9) + '-' + cpf.slice(9, 11);
+    key: "formatCpf",
+    value: function formatCpf(cpf) {
+      return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4').slice(0, 14);
     }
   }, {
-    key: "geraNovoCpf",
-    value: function geraNovoCpf() {
-      var cpfParcial = this.rand();
-      var digito1 = _ValidaCpf__WEBPACK_IMPORTED_MODULE_0__["default"].criaDigito(cpfParcial);
-      var digito2 = _ValidaCpf__WEBPACK_IMPORTED_MODULE_0__["default"].criaDigito(cpfParcial + digito1);
-      var novoCpf = cpfParcial + digito1 + digito2;
-      console.log(novoCpf);
-      return this.formataCpf(novoCpf);
+    key: "generateNewCpf",
+    value: function generateNewCpf() {
+      var partialCpf = this.random();
+      var digitOne = _validateCpf__WEBPACK_IMPORTED_MODULE_0__["default"].createDigit(partialCpf);
+      var digitTwo = _validateCpf__WEBPACK_IMPORTED_MODULE_0__["default"].createDigit(partialCpf + digitOne);
+      var newCpf = partialCpf + digitOne + digitTwo;
+      return this.formatCpf(newCpf);
     }
   }]);
 
-  return GeraCpf;
+  return GenerateCpf;
 }();
 
 
 
 /***/ }),
 
-/***/ "./src/modules/ValidaCpf.js":
-/*!**********************************!*\
-  !*** ./src/modules/ValidaCpf.js ***!
-  \**********************************/
+/***/ "./src/modules/validateCpf.js":
+/*!************************************!*\
+  !*** ./src/modules/validateCpf.js ***!
+  \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ ValidaCpf)
+/* harmony export */   "default": () => (/* binding */ ValidateCpf)
 /* harmony export */ });
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -74,57 +72,61 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-var ValidaCpf = /*#__PURE__*/function () {
-  function ValidaCpf() {
-    _classCallCheck(this, ValidaCpf);
+var ValidateCpf = /*#__PURE__*/function () {
+  function ValidateCpf() {
+    _classCallCheck(this, ValidateCpf);
   }
 
-  _createClass(ValidaCpf, [{
+  _createClass(ValidateCpf, [{
     key: "construtor",
-    value: function construtor(cpfRecebido) {
-      Object.defineProperty(this, 'cpfLimpo', {
+    value: function construtor(cpfReceived) {
+      Object.defineProperty(this, 'cleanedCpf', {
         writable: false,
         configurable: false,
         enumerable: true,
-        value: cpfRecebido.replace(/\D+/g, '')
+        value: cpfReceived.replace(/\D+/g, '')
       });
     }
   }, {
     key: "isSequence",
-    value: function isSequence() {
-      return this.cpfLimpo === this.cpfLimpo[0].repeat(11);
+    value: function isSequence(cleanedCpf) {
+      return cleanedCpf === cleanedCpf[0].repeat(cleanedCpf.length);
     }
   }, {
-    key: "geraNovoCpf",
-    value: function geraNovoCpf() {
-      var cpfParcial = this.cpfLimpo.slice(0, -2);
-      var digito1 = ValidaCpf.criaDigito(cpfParcial);
-      var digito2 = ValidaCpf.criaDigito(cpfParcial + digito1);
-      this.novoCpf = cpfParcial + digito1 + digito2;
+    key: "generateNewCpf",
+    value: function generateNewCpf() {
+      var partialCpf = this.cleanedCpf.slice(0, -2);
+      var digitOne = ValidateCpf.createDigit(partialCpf);
+      var digitTwo = ValidateCpf.createDigit(partialCpf + digitOne);
+      this.newCpf = partialCpf + digitOne + digitTwo;
     }
   }, {
-    key: "valida",
-    value: function valida() {
-      if (typeof this.cpfLimpo === 'undefined' || this.cpfLimpo.length !== 11 || this.isSequence()) return false;
-      this.geraNovoCpf();
-      return this.novoCpf === this.cpfLimpo;
+    key: "validate",
+    value: function validate() {
+      if (typeof this.cleanedCpf === 'undefined' || this.cleanedCpf.length !== 11 || this.isSequence(this.cleanedCpf)) {
+        return false;
+      }
+
+      this.generateNewCpf();
+      return this.newCpf === this.cleanedCpf;
     }
   }], [{
-    key: "criaDigito",
-    value: function criaDigito(cpfParcial) {
-      var cpfArray = Array.from(cpfParcial);
-      var tamanho = cpfArray.length + 1;
-      var digito = cpfArray.reduce(function (a, v) {
-        a += Number(v) * tamanho;
-        tamanho--;
+    key: "createDigit",
+    value: function createDigit(partialCpf) {
+      var cpfString = partialCpf.toString();
+      var cpfArray = Array.from(cpfString);
+      var length = cpfArray.length + 1;
+      var digit = cpfArray.reduce(function (a, v) {
+        a += Number(v) * length;
+        length--;
         return a;
       }, 0);
-      digito = 11 - digito % 11;
-      return digito > 9 ? '0' : String(digito);
+      digit = 11 - digit % 11;
+      return digit > 9 ? '0' : String(digit);
     }
   }]);
 
-  return ValidaCpf;
+  return ValidateCpf;
 }();
 
 
@@ -151,7 +153,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root {\n\t--white: #fcfcfc;\n\t--primary-color: #003f9e;\n\t--second-color: #4a8ff7;\n\t--disable-color: #616c7e;\n}\n\n* {\n\toutline: 0;\n\tfont-family: 'Open sans', sans-serif;\n\tfont-weight: bold;\n\ttext-align: center;\n\tbox-sizing: border-box;\n\ttext-transform: uppercase;\n\tmargin: 0;\n\tpadding: 0;\n}\n\nbody {\n\tbackground-color: var(--primary-color);\n}\n\n.container {\n\tline-height: 1.8em;\n\tfont-size: 1.2em;\n\tmargin: 25vh auto;\n\tpadding: 2rem 0rem 1rem;\n\tmax-width: 25rem;\n\theight: 14rem;\n\tborder-radius: 1.5rem;\n\tborder: solid 3px var(--white);\n}\n\nh1 {\n\tpadding: 0.4rem 0rem;\n\tmargin: 0.2rem 0 1rem;\n}\n\nh1,\ninput,\nbutton {\n\tbackground-color: var(--white);\n\tcolor: var(--primary-color);\n\theight: 3rem;\n}\n\nh2{\n\theight: 3rem;\n}\n\nbutton {\n\twidth: 9rem;\n\tfont-size: 1.2em;\n\tborder-radius: 20rem;\n\tborder: none;\n\tcursor: pointer;\n\tmargin: 0.1rem auto;\n}\n\nbutton:hover {\n\tbackground-color: var(--second-color);\n\tcolor: var(--white);\n}\n\n#resultado {\n\tbackground-color: var(--primary-color);\n\tcolor: var(--white);\n\twidth: 15rem;\n\tmargin: 0 auto;\n}\n\n@media only screen and (max-width: 768px) {\n\t.container {\n\t\tline-height: 2em;\n\t\tfont-size: 1.15em;\n\t}\n}\n\n@media only screen and (max-width: 576px) {\n\t.container {\n\t\tline-height: 1.8em;\n\t}\n}\n\n@media only screen and (max-width: 420px) {\n\t.container {\n\t\tmargin: 25vh 1rem;\n\t\tline-height: 2em;\n\t\tfont-size: 1.1em;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./src/assets/css/style.css"],"names":[],"mappings":"AACA;CACC,gBAAgB;CAChB,wBAAwB;CACxB,uBAAuB;CACvB,wBAAwB;AACzB;;AAEA;CACC,UAAU;CACV,oCAAoC;CACpC,iBAAiB;CACjB,kBAAkB;CAClB,sBAAsB;CACtB,yBAAyB;CACzB,SAAS;CACT,UAAU;AACX;;AAEA;CACC,sCAAsC;AACvC;;AAEA;CACC,kBAAkB;CAClB,gBAAgB;CAChB,iBAAiB;CACjB,uBAAuB;CACvB,gBAAgB;CAChB,aAAa;CACb,qBAAqB;CACrB,8BAA8B;AAC/B;;AAEA;CACC,oBAAoB;CACpB,qBAAqB;AACtB;;AAEA;;;CAGC,8BAA8B;CAC9B,2BAA2B;CAC3B,YAAY;AACb;;AAEA;CACC,YAAY;AACb;;AAEA;CACC,WAAW;CACX,gBAAgB;CAChB,oBAAoB;CACpB,YAAY;CACZ,eAAe;CACf,mBAAmB;AACpB;;AAEA;CACC,qCAAqC;CACrC,mBAAmB;AACpB;;AAEA;CACC,sCAAsC;CACtC,mBAAmB;CACnB,YAAY;CACZ,cAAc;AACf;;AAEA;CACC;EACC,gBAAgB;EAChB,iBAAiB;CAClB;AACD;;AAEA;CACC;EACC,kBAAkB;CACnB;AACD;;AAEA;CACC;EACC,iBAAiB;EACjB,gBAAgB;EAChB,gBAAgB;CACjB;AACD","sourcesContent":["@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');\n:root {\n\t--white: #fcfcfc;\n\t--primary-color: #003f9e;\n\t--second-color: #4a8ff7;\n\t--disable-color: #616c7e;\n}\n\n* {\n\toutline: 0;\n\tfont-family: 'Open sans', sans-serif;\n\tfont-weight: bold;\n\ttext-align: center;\n\tbox-sizing: border-box;\n\ttext-transform: uppercase;\n\tmargin: 0;\n\tpadding: 0;\n}\n\nbody {\n\tbackground-color: var(--primary-color);\n}\n\n.container {\n\tline-height: 1.8em;\n\tfont-size: 1.2em;\n\tmargin: 25vh auto;\n\tpadding: 2rem 0rem 1rem;\n\tmax-width: 25rem;\n\theight: 14rem;\n\tborder-radius: 1.5rem;\n\tborder: solid 3px var(--white);\n}\n\nh1 {\n\tpadding: 0.4rem 0rem;\n\tmargin: 0.2rem 0 1rem;\n}\n\nh1,\ninput,\nbutton {\n\tbackground-color: var(--white);\n\tcolor: var(--primary-color);\n\theight: 3rem;\n}\n\nh2{\n\theight: 3rem;\n}\n\nbutton {\n\twidth: 9rem;\n\tfont-size: 1.2em;\n\tborder-radius: 20rem;\n\tborder: none;\n\tcursor: pointer;\n\tmargin: 0.1rem auto;\n}\n\nbutton:hover {\n\tbackground-color: var(--second-color);\n\tcolor: var(--white);\n}\n\n#resultado {\n\tbackground-color: var(--primary-color);\n\tcolor: var(--white);\n\twidth: 15rem;\n\tmargin: 0 auto;\n}\n\n@media only screen and (max-width: 768px) {\n\t.container {\n\t\tline-height: 2em;\n\t\tfont-size: 1.15em;\n\t}\n}\n\n@media only screen and (max-width: 576px) {\n\t.container {\n\t\tline-height: 1.8em;\n\t}\n}\n\n@media only screen and (max-width: 420px) {\n\t.container {\n\t\tmargin: 25vh 1rem;\n\t\tline-height: 2em;\n\t\tfont-size: 1.1em;\n\t}\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\n\t--white: #fcfcfc;\n\t--primary-color: #003f9e;\n\t--second-color: #4a8ff7;\n\t--disable-color: #616c7e;\n}\n\n* {\n\toutline: 0;\n\tfont-family: 'Open sans', sans-serif;\n\tfont-weight: bold;\n\ttext-align: center;\n\tbox-sizing: border-box;\n\ttext-transform: uppercase;\n\tmargin: 0;\n\tpadding: 0;\n}\n\nbody {\n\tbackground-color: var(--primary-color);\n}\n\n.container {\n\tline-height: 1.8em;\n\tfont-size: 1.2em;\n\tmargin: 25vh auto;\n\tpadding: 2rem 0rem 1rem;\n\tmax-width: 25rem;\n\theight: 14rem;\n\tborder-radius: 1.5rem;\n\tborder: solid 3px var(--white);\n}\n\nh1 {\n\tpadding: 0.4rem 0rem;\n\tmargin: 0.2rem 0 1rem;\n}\n\nh1,\ninput,\nbutton {\n\tbackground-color: var(--white);\n\tcolor: var(--primary-color);\n\theight: 3rem;\n}\n\nh2{\n\theight: 3rem;\n}\n\nbutton {\n\twidth: 9rem;\n\tfont-size: 1.2em;\n\tborder-radius: 20rem;\n\tborder: none;\n\tcursor: pointer;\n\tmargin: 0.1rem auto;\n}\n\nbutton:hover {\n\tbackground-color: var(--second-color);\n\tcolor: var(--white);\n}\n\n#result {\n\tbackground-color: var(--primary-color);\n\tcolor: var(--white);\n\twidth: 15rem;\n\tmargin: 0 auto;\n}\n\n@media only screen and (max-width: 768px) {\n\t.container {\n\t\tline-height: 2em;\n\t\tfont-size: 1.15em;\n\t}\n}\n\n@media only screen and (max-width: 576px) {\n\t.container {\n\t\tline-height: 1.8em;\n\t}\n}\n\n@media only screen and (max-width: 420px) {\n\t.container {\n\t\tmargin: 25vh 1rem;\n\t\tline-height: 2em;\n\t\tfont-size: 1.1em;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./src/assets/css/style.css"],"names":[],"mappings":"AACA;CACC,gBAAgB;CAChB,wBAAwB;CACxB,uBAAuB;CACvB,wBAAwB;AACzB;;AAEA;CACC,UAAU;CACV,oCAAoC;CACpC,iBAAiB;CACjB,kBAAkB;CAClB,sBAAsB;CACtB,yBAAyB;CACzB,SAAS;CACT,UAAU;AACX;;AAEA;CACC,sCAAsC;AACvC;;AAEA;CACC,kBAAkB;CAClB,gBAAgB;CAChB,iBAAiB;CACjB,uBAAuB;CACvB,gBAAgB;CAChB,aAAa;CACb,qBAAqB;CACrB,8BAA8B;AAC/B;;AAEA;CACC,oBAAoB;CACpB,qBAAqB;AACtB;;AAEA;;;CAGC,8BAA8B;CAC9B,2BAA2B;CAC3B,YAAY;AACb;;AAEA;CACC,YAAY;AACb;;AAEA;CACC,WAAW;CACX,gBAAgB;CAChB,oBAAoB;CACpB,YAAY;CACZ,eAAe;CACf,mBAAmB;AACpB;;AAEA;CACC,qCAAqC;CACrC,mBAAmB;AACpB;;AAEA;CACC,sCAAsC;CACtC,mBAAmB;CACnB,YAAY;CACZ,cAAc;AACf;;AAEA;CACC;EACC,gBAAgB;EAChB,iBAAiB;CAClB;AACD;;AAEA;CACC;EACC,kBAAkB;CACnB;AACD;;AAEA;CACC;EACC,iBAAiB;EACjB,gBAAgB;EAChB,gBAAgB;CACjB;AACD","sourcesContent":["@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');\n:root {\n\t--white: #fcfcfc;\n\t--primary-color: #003f9e;\n\t--second-color: #4a8ff7;\n\t--disable-color: #616c7e;\n}\n\n* {\n\toutline: 0;\n\tfont-family: 'Open sans', sans-serif;\n\tfont-weight: bold;\n\ttext-align: center;\n\tbox-sizing: border-box;\n\ttext-transform: uppercase;\n\tmargin: 0;\n\tpadding: 0;\n}\n\nbody {\n\tbackground-color: var(--primary-color);\n}\n\n.container {\n\tline-height: 1.8em;\n\tfont-size: 1.2em;\n\tmargin: 25vh auto;\n\tpadding: 2rem 0rem 1rem;\n\tmax-width: 25rem;\n\theight: 14rem;\n\tborder-radius: 1.5rem;\n\tborder: solid 3px var(--white);\n}\n\nh1 {\n\tpadding: 0.4rem 0rem;\n\tmargin: 0.2rem 0 1rem;\n}\n\nh1,\ninput,\nbutton {\n\tbackground-color: var(--white);\n\tcolor: var(--primary-color);\n\theight: 3rem;\n}\n\nh2{\n\theight: 3rem;\n}\n\nbutton {\n\twidth: 9rem;\n\tfont-size: 1.2em;\n\tborder-radius: 20rem;\n\tborder: none;\n\tcursor: pointer;\n\tmargin: 0.1rem auto;\n}\n\nbutton:hover {\n\tbackground-color: var(--second-color);\n\tcolor: var(--white);\n}\n\n#result {\n\tbackground-color: var(--primary-color);\n\tcolor: var(--white);\n\twidth: 15rem;\n\tmargin: 0 auto;\n}\n\n@media only screen and (max-width: 768px) {\n\t.container {\n\t\tline-height: 2em;\n\t\tfont-size: 1.15em;\n\t}\n}\n\n@media only screen and (max-width: 576px) {\n\t.container {\n\t\tline-height: 1.8em;\n\t}\n}\n\n@media only screen and (max-width: 420px) {\n\t.container {\n\t\tmargin: 25vh 1rem;\n\t\tline-height: 2em;\n\t\tfont-size: 1.1em;\n\t}\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -660,15 +662,16 @@ var __webpack_exports__ = {};
   !*** ./src/main.js ***!
   \*********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _modules_GeraCpf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/GeraCpf */ "./src/modules/GeraCpf.js");
+/* harmony import */ var _modules_generateCpf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/generateCpf */ "./src/modules/generateCpf.js");
 /* harmony import */ var _assets_css_style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assets/css/style.css */ "./src/assets/css/style.css");
 
 
-document.addEventListener('submit', function (e) {
+var container = document.querySelector('.container');
+container.addEventListener('submit', function (e) {
   e.preventDefault();
-  var gera = new _modules_GeraCpf__WEBPACK_IMPORTED_MODULE_0__["default"]();
-  var resultado = document.querySelector('#resultado');
-  resultado.innerHTML = gera.geraNovoCpf();
+  var generate = new _modules_generateCpf__WEBPACK_IMPORTED_MODULE_0__["default"]();
+  var result = document.querySelector('#result');
+  result.innerHTML = generate.generateNewCpf();
 });
 })();
 

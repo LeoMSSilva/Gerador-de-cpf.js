@@ -63,7 +63,7 @@ button:hover {
 	color: var(--white);
 }
 
-#resultado {
+#result {
 	background-color: var(--primary-color);
 	color: var(--white);
 	width: 15rem;

@@ -1,9 +1,10 @@
-import GeraCpf from './modules/GeraCpf';
+import GenerateCpf from './modules/generateCpf';
 import './assets/css/style.css';
 
-document.addEventListener('submit', e => {
-    e.preventDefault();
-    const gera = new GeraCpf();
-    const resultado = document.querySelector('#resultado');
-    resultado.innerHTML = gera.geraNovoCpf();
+const container = document.querySelector('.container');
+container.addEventListener('submit', (e) => {
+	e.preventDefault();
+	const generate = new GenerateCpf();
+	const result = document.querySelector('#result');
+	result.innerHTML = generate.generateNewCpf();
 });
