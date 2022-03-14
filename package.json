@@ -1,26 +1,26 @@
 {
-  "name": "cpfGenerator.js",
-  "version": "1.0.0",
-  "description": "It is a valid random cpfs generator.",
-  "main": "main.js",
-  "scripts": {
-    "start": "webpack -w"
-  },
-  "keywords": [],
-  "author": "LeoMSSilva",
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/cli": "^7.13.10",
-    "@babel/core": "^7.13.13",
-    "@babel/preset-env": "^7.13.12",
-    "babel-loader": "^8.2.2",
-    "webpack": "^5.28.0",
-    "webpack-cli": "^4.6.0"
-  },
-  "dependencies": {
-    "core-js": "^3.9.1",
-    "css-loader": "^5.2.0",
-    "regenerator-runtime": "^0.13.7",
-    "style-loader": "^2.0.0"
-  }
+	"name": "cpfGenerator.js",
+	"version": "1.0.0",
+	"description": "It is a valid random cpfs generator.",
+	"main": "main.js",
+	"scripts": {
+		"start": "webpack "
+	},
+	"keywords": [],
+	"author": "LeoMSSilva",
+	"license": "ISC",
+	"dependencies": {
+		"core-js": "^3.21.1",
+		"css-loader": "^6.7.1",
+		"regenerator-runtime": "^0.13.9",
+		"style-loader": "^3.3.1"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.17.6",
+		"@babel/core": "^7.17.5",
+		"@babel/preset-env": "^7.16.11",
+		"babel-loader": "^8.2.3",
+		"webpack": "^5.70.0",
+		"webpack-cli": "^4.9.2"
+	}
 }
