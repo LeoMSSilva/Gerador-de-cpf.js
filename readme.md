@@ -35,7 +35,7 @@ It aims to deepen my knowledge and generate something useful while I study.
 
 ---
 
-## :rocket: Getting Started
+# :dart: Installation
 
 **Then in order, clone the project.**
 
@@ -52,6 +52,32 @@ Or by ssh, running this command:
 ```
 
 SSH is a secure protocol, but you need to register a key ssh in your github before.
+
+---
+
+## :hammer_and_wrench: Install dependencies
+
+```bash
+  yarn
+```
+
+or
+
+```bash
+  yarn install
+```
+
+---
+
+## :rocket: Getting Started
+
+To run it, use in the terminal:
+
+```bash
+  yarn start
+```
+
+And open the browser at: [link](http://localhost:8080)
 
 ---
 
