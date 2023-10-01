@@ -37,7 +37,12 @@ It aims to deepen my knowledge and generate something useful while I study.
 
 # :dart: Installation
 
-**Then in order, clone the project.**
+**First you need to install:**
+
+- [Node.js](https://pt-br.nodejs.org/) (required)
+- [Pnpm](https://pnpm.io/pt/) (optional)
+
+  **Then in order, clone the project.**
 
 By HTTPS, running this command:
 
@@ -58,13 +63,7 @@ SSH is a secure protocol, but you need to register a key ssh in your github befo
 ## :hammer_and_wrench: Install dependencies
 
 ```bash
-  yarn
-```
-
-or
-
-```bash
-  yarn install
+  pnpm install
 ```
 
 ---
@@ -74,7 +73,7 @@ or
 To run it, use in the terminal:
 
 ```bash
-  yarn start
+  pnpm start
 ```
 
 And open the browser at: [link](http://localhost:8080)
